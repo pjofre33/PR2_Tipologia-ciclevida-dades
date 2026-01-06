@@ -4,10 +4,6 @@ Autors: Pol Jofre i Nil Masalles Domenech
 Data: Gener 2026
 """
 
-# =============================================================================
-# SECCIÓ 1: IMPORTS I CÀRREGA DE DADES
-# =============================================================================
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,17 +36,15 @@ df = pd.read_csv('../vinils_jazz_2023.csv')
 print(f"\nDataset carregat correctament!")
 print(f"Dimensions: {df.shape[0]} files × {df.shape[1]} columnes\n")
 
-print("PREGUNTA DE RECERCA:")
 print("Quins factors influeixen en el preu dels vinils de jazz?")
 print("Hi ha diferències de preu segons el país d'origen?\n")
 
-print("VARIABLES DEL DATASET:")
+print("Variables del dataset extret")
 print(df.columns.tolist())
-print("\nPrimeres files:")
 print(df.head())
 
-print("\nInformació bàsica:")
-df.info()
+print("Informació bàsica"
+df.info() 
 
 print("\nEstadístiques descriptives:")
 print(df.describe())
@@ -58,7 +52,7 @@ print(df.describe())
 # Visualització inicial
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-# Distribució de preus (sense processar encara)
+# Distribució de preus
 df_temp = df.copy()
 df_temp['preu_num'] = df_temp['preu'].str.extract(r'([0-9.]+)').astype(float)
 axes[0, 0].hist(df_temp['preu_num'].dropna(), bins=50, edgecolor='black')
@@ -97,7 +91,6 @@ plt.close()
 # 2. INTEGRACIÓ I SELECCIÓ DE DADES
 # =============================================================================
 
-print("2. INTEGRACIÓ I SELECCIÓ DE DADES")
 
 print("\nMantenim totes les variables originals i en creem algunes de noves:")
 
@@ -131,7 +124,7 @@ df_net['media_condition'] = df_net['media_condition'].str.extract(r'^([^)]+\))',
 print("- Netejant camp 'shipped_from'...")
 df_net['shipped_from'] = df_net['shipped_from'].str.replace('Ships From:', 'Origen:', regex=False)
 
-print(f"\n✓ Variables derivades creades: {len(['moneda', 'preu_num', 'format', 'es_limitada', 'num_discos'])}")
+print(f"\n Variables creades: {len(['moneda', 'preu_num', 'format', 'es_limitada', 'num_discos'])}")
 
 # =============================================================================
 # 3. NETEJA DE DADES
