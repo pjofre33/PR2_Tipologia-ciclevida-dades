@@ -122,7 +122,7 @@ df_net['media_condition'] = df_net['media_condition'].str.extract(r'^([^)]+\))',
 
 # Netejar shipped_from (canviar "Ships From:" per "Origen: ")
 print("- Netejant camp 'shipped_from'...")
-df_net['shipped_from'] = df_net['shipped_from'].str.replace('Ships From:', 'Origen:', regex=False)
+df_net['shipped_from'] = df_net['shipped_from'].astype(str).str.replace(r'.*From:', '', regex=True).str.strip()
 
 print(f"\n Variables creades: {len(['moneda', 'preu_num', 'format', 'es_limitada', 'num_discos'])}")
 
