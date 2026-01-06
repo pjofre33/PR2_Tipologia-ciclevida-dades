@@ -14,7 +14,7 @@ Aquest projecte realitza una anàlisi completa del dataset de vinils de jazz ven
 ```
 PRACT2/
 │
-├── README.md                          # Aquest fitxer
+├── README.md                      
 │
 └── codi/
     ├── analisi_vinils.py              # Script principal amb tot l'anàlisi
@@ -25,34 +25,17 @@ PRACT2/
 
 El projecte necessita accedir a:
 
-- `../vinils_jazz_2023.csv` - Dataset original (al directori arrel del projecte)
-
+- `../vinils_jazz_2023.csv` - Dataset original extret en la pràctica 1
 ## Com executar
 
-## Opció A:
+## Entorn virtual
 
-### 1. Instal·lar dependències
-
-```bash
-cd codi
-pip install -r requirements.txt
-```
-
-### 2. Executar l'anàlisi
-
-```bash
-python analisi_vinils.py
-```
-
-## Opció B: Entorn virtual
-
-```bash
 # Crear entorn virtual
 python -m venv .venv
 
 # Activar-lo
 source .venv/bin/activate  # macOS/Linux
-# o
+
 .venv\Scripts\activate     # Windows
 
 # Instal·lar dependències
@@ -65,8 +48,8 @@ python3 analisi_vinils.py
 
 L'script generarà:
 
-- **5 gràfics** (PNG) al directori `codi/`:
-  - `01_exploracio_inicial.png` - Visualitzacions inicials del dataset
+- **5 gràfics** al directori `codi/`:
+  - `01_exploracio_inicial.png` - Visualització inicial del dataset
   - `02_despres_neteja.png` - Distribucions després de la neteja
   - `03_model_regressio.png` - Resultats dels models de regressió
   - `04_clustering.png` - Visualització dels clusters
