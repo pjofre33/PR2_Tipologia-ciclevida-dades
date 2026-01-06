@@ -97,10 +97,21 @@ print("\nMantenim totes les variables originals i en creem algunes de noves:")
 # Crear variables derivades
 df_net = df.copy()
 
-# Extreure moneda i preu numèric
-print("\n- Extraient moneda i preu numèric...")
-df_net['moneda'] = df_net['preu'].astype(str).str.extract(r'([€£$])')
-df_net['preu_num'] = df_net['preu'].astype(str).str.extract(r'([0-9.]+)').astype(float)
+print("\n- Extraient moneda i valor numèric...")
+
+# (\D+)  separa tot el que no és un número (la moneda)
+# ([\d\.]+) ens agafa els dígits i el decimal (el valor)
+df_net[['moneda', 'valor']] = df_net['preu'].str.extract(r'(\D+)([\d\.]+)')
+
+# Convertim la columna valor a numèric
+df_net['valor'] = df_net['valor'].astype(float)
+
+# Netejem la moneda d'espais en blanc (molt important per al diccionari després)
+df_net['moneda'] = df_net['moneda'].str.strip()
+
+# Comprovem el resultat
+print("Exemple d'extracció:")
+print(df_net[['preu', 'moneda', 'valor']].head())
 
 # Extreure format (LP, 2xLP, etc.)
 print("- Extraient format del vinil...")
