@@ -43,7 +43,7 @@ print("Variables del dataset extret")
 print(df.columns.tolist())
 print(df.head())
 
-print("Informació bàsica"
+print("Informació bàsica")
 df.info() 
 
 print("\nEstadístiques descriptives:")
