@@ -167,19 +167,42 @@ print(f"{len(categoriques)} variables convertides a 'category'")
 # 3.3 Normalitzar preus a EUR
 print("\n3.3. NORMALITZACIÓ DE PREUS A EUR")
 
-# Tipus de canvi aproximats (desembre 2023)
+# Diccionari amb tipus de canvi aprox.
+tipus_canvi = {
+    '€': 1.0, 'EUR': 1.0,
+    '£': 1.17, 'GBP': 1.17,
+    '$': 0.92, 'USD': 0.92,
+    'CA$': 0.68, 'CAD': 0.68,
+    'A$': 0.60, 'AUD': 0.60,
+    '¥': 0.0062, 'JPY': 0.0062,
+    'CHF': 1.04
+}
+
 print("Tipus de canvi utilitzats:")
-print("  £ → EUR: 1.17")
-print("  $ → EUR: 0.92")
+print(tipus_canvi)
 
-df_net['preu_eur'] = df_net['preu_num'].copy()
-df_net.loc[df_net['moneda'] == '£', 'preu_eur'] *= 1.17
-df_net.loc[df_net['moneda'] == '$', 'preu_eur'] *= 0.92
+def convertir_a_euros(row):
+    # Agafem la moneda neta
+    moneda_neta = str(row['moneda']).strip()
+    # Fem servir la columna 'valor' que hem extret abans
+    valor = row['valor']
+    
+    canvi = tipus_canvi.get(moneda_neta, 1.0)
+    
+    if pd.isna(valor):
+        return np.nan
+        
+    return valor * canvi
 
-print(f"\nTots els preus normalitzats a EUR")
-print(f"Preu mitjà: {df_net['preu_eur'].mean():.2f} EUR")
-print(f"Preu mínim: {df_net['preu_eur'].min():.2f} EUR")
-print(f"Preu màxim: {df_net['preu_eur'].max():.2f} EUR")
+# Apliquem conversió
+print("\n- Aplicant conversió de divises...")
+df_net['preu_eur'] = df_net.apply(convertir_a_euros, axis=1)
+
+# Netejar possibles nuls residuals al preu
+nuls_preu = df_net['preu_eur'].isnull().sum()
+if nuls_preu > 0:
+    print(f"ATENCIÓ: Eliminant {nuls_preu} registres amb preu desconegut.")
+    df_net = df_net.dropna(subset=['preu_eur'])
 
 # 3.4 Outliers
 print("\n3.4. IDENTIFICACIÓ D'OUTLIERS")
